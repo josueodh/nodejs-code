@@ -2,9 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { Category } from "./Category";
 
 @Entity("products")
 class Product {
@@ -13,6 +16,9 @@ class Product {
 
   @Column()
   name: string;
+
+  @Column()
+  cover: string;
 
   @Column()
   slug: string;
@@ -25,6 +31,10 @@ class Product {
 
   @Column()
   description: string;
+
+  @ManyToOne(() => Category, (category) => category.products)
+  @JoinColumn({ name: "category_id" })
+  category: Category;
 
   @CreateDateColumn()
   created_at: Date;
